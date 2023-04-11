@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Board</title>
+</head>
+
+<body>
+    <h1>게시판</h1>
+    <ul>
+        {% for board in boards %}
+        <li>{{ board.title }} - {{ board.content }}</li>
+        {% endfor %}
+    </ul>
+    <ul>
+        <a href="/board/create/">작성하기</a>
+    </ul>
+</body>
+
+</html>
