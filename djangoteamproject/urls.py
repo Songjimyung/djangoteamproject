@@ -1,3 +1,4 @@
+
 """
 URL configuration for djangoteamproject project.
 
@@ -15,9 +16,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
+from boards import views
+from boards.views import Boards, BoardList
 
+# as_view()를 써야 cbv 방식을 fbv 처럼 쓸 수 있따.
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('board.urls')),
+    path('board/list/', BoardList.as_view(), name='board-list'),
+    path('board/', Boards.as_view(), name='board-create'),
+    path('board/<int:board_id>/', Boards.as_view(), name='board-delete'),
+
+    # path('board/', views.board_create),
+    # path('board/delete/<int:board_id>/', views.board_delete),
 ]
