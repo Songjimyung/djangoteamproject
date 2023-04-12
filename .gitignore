@@ -237,4 +237,8 @@ $RECYCLE.BIN/
 *.lnk
 
 
+<<<<<<< HEAD
 # End of https://www.toptal.com/developers/gitignore/api/django,windows,visualstudiocode,venv
+=======
+# End of https://www.toptal.com/developers/gitignore/api/django,windows,visualstudiocode,venv
+>>>>>>> ad85b2fd6e281c1fbcce8b9c3a927d92031188b2
