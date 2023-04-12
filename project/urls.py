@@ -1,5 +1,5 @@
 """
-URL configuration for djangoteamproject project.
+URL configuration for project project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.2/topics/http/urls/
@@ -15,18 +15,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from boards import views
-from boards.views import Boards, BoardList
+from django.urls import path, include
 
-# as_view()를 써야 cbv 방식을 fbv 처럼 쓸 수 있따.
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('board/list/', BoardList.as_view(), name='board-list'),
-    path('board/', Boards.as_view(), name='board-create'),
-    path('board/<int:board_id>/', Boards.as_view(), name='board-delete'),
-
-    # path('board/', views.board_create),
-    # path('board/delete/<int:board_id>/', views.board_delete),
+    path("admin/", admin.site.urls),
+    path("", include('user.urls')),
 ]
-
