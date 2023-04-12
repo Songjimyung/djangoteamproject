@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Edit Board</h1>
+  <form method="POST">
+    {% csrf_token %}
+    {{ boardform.as_p }}
+    <button type="submit">수정완료</button>
+  </form>
+{% endblock %}
