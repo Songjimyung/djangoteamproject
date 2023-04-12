@@ -1,4 +1,3 @@
-
 """
 URL configuration for djangoteamproject project.
 
@@ -30,3 +29,4 @@ urlpatterns = [
     # path('board/', views.board_create),
     # path('board/delete/<int:board_id>/', views.board_delete),
 ]
+
