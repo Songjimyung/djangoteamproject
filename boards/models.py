@@ -8,8 +8,8 @@ class Board(models.Model):
     board_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=50)
     content = models.TextField()
-    created_date = models.DateField(auto_now_add=True)
-    updated_date = models.DateField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = 'board'

@@ -2,19 +2,32 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
     <title>Board</title>
 </head>
 
 <body>
+    {% load method_override %}
     <h1>게시판</h1>
-    <ul>
-        {% for board in boards %}
-        <li>{{ board.title }} - {{ board.content }}</li>
-        {% endfor %}
-    </ul>
-    <ul>
-        <a href="/board/create/">작성하기</a>
-    </ul>
+
+    <a href="/board/">작성하기</a>
+    {% for board in boards %}
+    <article>
+        <header>{{ board.title }}</header>
+        {{ board.content }}
+        <footer>작성 시간: {{ board.created_at|timesince }} 전
+
+            <form action="/board/{{ board.board_id }}/" method="POST">
+                {% csrf_token %}
+
+                {% method_override 'DELETE' %}
+                <input type="submit" role="button" value="삭제">
+            </form>
+
+        </footer>
+    </article>
+    {% endfor %}
+
 </body>
 
 </html>

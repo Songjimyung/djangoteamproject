@@ -6,7 +6,7 @@
 </head>
 
 <body>
-    <form action="/board/create/" method="POST">
+    <form action="/board/" method="POST">
         {% csrf_token %}
         <br>
         <input type="text" id="title" name="title" placeholder="제목" required />

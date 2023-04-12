@@ -17,13 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from boards import views
+from boards.views import Boards, BoardList
 
 # as_view()를 써야 cbv 방식을 fbv 처럼 쓸 수 있따.
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('board/list/', views.board_list),
-    path('board/create/', views.board_create),
-    path('board/delete/<int:board_id>/', views.board_delete),
-    # path('board/', Board.as_view(), name='Board'),
-    # path('board/create', BoardCreate.as_view(), name='BoardCreate'),
+    path('board/list/', BoardList.as_view(), name='board-list'),
+    path('board/', Boards.as_view(), name='board-create'),
+    path('board/<int:board_id>/', Boards.as_view(), name='board-delete'),
+
+    # path('board/', views.board_create),
+    # path('board/delete/<int:board_id>/', views.board_delete),
 ]

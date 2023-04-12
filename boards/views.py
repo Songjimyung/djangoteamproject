@@ -1,75 +1,44 @@
 from django.shortcuts import render, redirect
 from django.views.generic import View, ListView, CreateView, DeleteView
 from .models import Board
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from .forms import BoardForm
 from django.http import HttpResponse
 
 # Create your views here.
 # 추후 로그인 리콰이어
 
+# APIView는 RESTful API를 만들기 위해 Djnago에서 제공하는 클래스 기반 뷰 중 하나
+# RESTful API를 작성하는 데 필요한 다양한 기능을 제공한다.
+# 요청과 응답을 직렬화하는 Serializer, 이증과 권한을 다루는 Permission 및 Authentication 클래스 등을 제공
+# 각 HTTP 메서드(get,post,put,delete 등)에 대한 기본적인 구현을 제공
+# 이를 오버라이드하여 원하는 기능을 구현 가능
+# 그래서 APIView를 사용
+class Boards(View):
+    def get(self, request):
+        form = BoardForm()
+        return render(request, 'board/create_board.html', {'form': form})
 
-def board_create(request):
-    if request.method == 'POST':
+    def post(self, request):
         form = BoardForm(request.POST)
         if form.is_valid():
             board = form.save(commit=False)
             # board.author
             board.save()
 
-            return HttpResponse('작성 성공')
-            # return render(request, 'board/board.html')
-    else:
-        form = BoardForm()
-    return render(request, 'board/create_board.html', {'form': form})
+            return redirect('/board/list/')
+
+    def delete(self, request, board_id):
+        Board.objects.get(board_id=board_id).delete()
+        return redirect('/board/list/')
 
 
-def board_list(request):
-    if request.method == 'GET':
-        boards = Board.objects.all()
+class BoardList(View):
+    def get(self, request):
+        if request.method == 'GET':
+            boards = Board.objects.all().order_by('-updated_at')
+            return render(request, 'board/board_list.html', {'boards': boards})
+        return redirect('/board/')
 
-        return render(request, 'board/board_list.html', {'boards': boards})
-
-
-def board_delete(request, board_id):
-    Board.objects.filter(board_id=board_id).delete()
-    return redirect('/board/list/')
-
-
-# class Board(View):
-#     def get(self, request):
-#         boards = Board.objects.all()
-#         return render(request, "board.html", {'boards': boards})
-
-#     def post(self, request):
-#         # user_id
-#         title = request.POST.get('title')
-#         content = request.POST.get('content')
-#         board = Board.objects.create(title=title, contnet=content)
-
-#         return redirect('/board/')
-
-# class BoardCreate(View):
-#     def get(self):
-#         return redirect("/board_create.html")
-
-
-# class BoardListView(ListView):
-#     model = Board
-#     template_name = 'board_list.html'
-#     context_object_name = 'board_list'
-
-# class BoardDelete(DeleteView):
-#     model = Board
-#     template_name = 'board_detail.html'
-#     # URL 문자열을 동적을 생성하기 위해 reverse_lazy()를 쓴다
-#     success_url = reverse_lazy('board')
-
-# 추후 로그인 리콰이어, 나누게 된다면 쓰일 듯
-# class BoardCreate(CreateView):
-#     model = Board
-#     fields = ['title', 'content'] # user_id
-#     template_name = 'board_create.html'
-#     success_url = '/board/'
 
 # 게시글 이미지는 나중에 넣기? 관련 뷰가 있던 것 같음
