@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from boards import views
 from boards.views import Boards, BoardList, BoardDetail
+import user.views
 
 # as_view()를 써야 cbv 방식을 fbv 처럼 쓸 수 있따.
 urlpatterns = [
@@ -28,7 +29,11 @@ urlpatterns = [
     path('board/<int:pk>/', BoardDetail.as_view(), name='board_detail'),
     path('board/edit/<int:pk>/', views.board_edit, name='board_edit'),
 
+    path("", user.views.home, name="home"),
+    path("sign-up/", user.views.sign_up_view, name="sign-up"),
+    path("sign-in/", user.views.sign_in_view, name="sign-in"),
+    path("logout/", user.views.logout, name="logout"),
+
     # path('board/', views.board_create),
     # path('board/delete/<int:board_id>/', views.board_delete),
 ]
-
