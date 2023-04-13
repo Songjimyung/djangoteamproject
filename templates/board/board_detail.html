@@ -1,0 +1,30 @@
+<<<<<<< HEAD
+{% extends 'base.html' %}
+
+{% block content %}
+  {% if board.author == user %}
+    <h1>Edit Board</h1>
+    <form method="POST">
+      {% csrf_token %}
+      {{ boardform.as_p }}
+      <button type="submit">수정 완료</button>
+    </form>
+  {% else %}
+    <p>작성자만 수정이 가능합니다.</p>
+  {% endif %}
+=======
+{% extends 'base.html' %}
+
+{% block content %}
+  {% if board.author == user %}
+    <h1>Edit Board</h1>
+    <form method="POST">
+      {% csrf_token %}
+      {{ boardform.as_p }}
+      <button type="submit">수정 완료</button>
+    </form>
+  {% else %}
+    <p>작성자만 수정이 가능합니다.</p>
+  {% endif %}
+>>>>>>> ad85b2fd6e281c1fbcce8b9c3a927d92031188b2
+{% endblock %}
