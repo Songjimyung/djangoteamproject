@@ -1,5 +1,4 @@
 
-
 """
 ASGI config for djangoteamproject project.
 

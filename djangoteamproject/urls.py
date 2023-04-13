@@ -14,26 +14,16 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path
-from boards import views
-from boards.views import Boards, BoardList, BoardDetail
-import user.views
-
 # as_view()를 써야 cbv 방식을 fbv 처럼 쓸 수 있따.
+
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('board/list/', BoardList.as_view(), name='board-list'),
-    path('board/', Boards.as_view(), name='board-create'),
-    path('board/<int:board_id>/', Boards.as_view(), name='board-delete'),
-    path('board/<int:pk>/', BoardDetail.as_view(), name='board_detail'),
-    path('board/edit/<int:pk>/', views.board_edit, name='board_edit'),
-
-    path("", user.views.home, name="home"),
-    path("sign-up/", user.views.sign_up_view, name="sign-up"),
-    path("sign-in/", user.views.sign_in_view, name="sign-in"),
-    path("logout/", user.views.logout, name="logout"),
-
-    # path('board/', views.board_create),
-    # path('board/delete/<int:board_id>/', views.board_delete),
+    path('', include('user.urls')),
+    path('', include('my_page.urls')),
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
